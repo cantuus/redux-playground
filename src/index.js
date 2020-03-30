@@ -4,8 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
+import allReducers from './reducers/index'
 
-const store = createStore()
+//combine reducers lets you combine your reducers because you can't pass them individually
+//in the createStore function -- you can have multiple reducers in charge of different actions ('increment', 'signing in')
+
+const store = createStore(allReducers)
 
 ReactDOM.render(
   <React.StrictMode>
