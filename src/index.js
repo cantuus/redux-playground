@@ -5,15 +5,20 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import allReducers from './reducers/index'
-
+import { Provider } from 'react-redux';
 //combine reducers lets you combine your reducers because you can't pass them individually
 //in the createStore function -- you can have multiple reducers in charge of different actions ('increment', 'signing in')
 
-const store = createStore(allReducers)
+const store = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
