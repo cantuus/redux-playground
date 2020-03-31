@@ -4,20 +4,34 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist';
 import allReducers from './reducers/index'
+import storage from 'redux-persist/lib/storage'
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 //combine reducers lets you combine your reducers because you can't pass them individually
 //in the createStore function -- you can have multiple reducers in charge of different actions ('increment', 'signing in')
 
-const store = createStore(
-  allReducers,
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, allReducers);
+
+let store = createStore(
+  persistedReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
+
+let persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
