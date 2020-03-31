@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { increment, decrement } from './actions/index';
+import { toggleLog } from './actions/index'
 
 
 
@@ -18,7 +19,7 @@ function App() {
         <button onClick={() => dispatch(decrement())}>-</button>
 
         {isLogged ? <h3>Valuable Information I shouldn't see</h3> : ''}
-
+        <button onClick={() => dispatch(toggleLog())}>Sign in?</button>
       </header>
     </div>
   );
